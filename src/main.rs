@@ -4,5 +4,6 @@ use totl_backend::run;
 #[tokio::main]
 async fn main() {
     dotenv().ok();
-    run("postgres://postgres:postgres@ip-172-31-1-69/postgres").await;
+    let database_uri = dotenvy::var("DATABASE_URL").unwrap();
+    run(&database_uri).await;
 }
