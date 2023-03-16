@@ -7,7 +7,7 @@ use crate::database::tiers;
 #[derive(Deserialize)]
 pub struct ReqTier {
     pub title: String,
-    pub image: String,
+    pub image: Option<String>,
     pub tier: String,
     pub kind: Option<String>,
     pub game: String,
@@ -19,7 +19,7 @@ pub async fn create_tier(
 ) {
     let new_task = tiers::ActiveModel {
         title: Set(request_tier.title),
-        image: Set(Some(request_tier.image.into_bytes())),
+        image: Set(request_tier.image),
         tier: Set(request_tier.tier),
         kind: Set(request_tier.kind),
         game: Set(request_tier.game),

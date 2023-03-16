@@ -11,7 +11,7 @@ use crate::database::tiers;
 pub struct RespTier {
     id: i32,
     title: String,
-    image: String,
+    image: Option<String>,
     tier: String,
     kind: Option<String>,
 }
@@ -25,7 +25,7 @@ pub async fn get_one_tier(
         Ok(Json(RespTier {
             id: tier.id,
             title: tier.title,
-            image: String::from_utf8(tier.image.unwrap()).unwrap(),
+            image: tier.image,
             tier: tier.tier,
             kind: tier.kind,
         }))
@@ -62,7 +62,7 @@ pub async fn get_all_tiers(
         .map(|db_tier| RespTier {
             id: db_tier.id,
             title: db_tier.title,
-            image: String::from_utf8(db_tier.image.unwrap()).unwrap(),
+            image: db_tier.image,
             tier: db_tier.tier,
             kind: db_tier.kind,
         })

@@ -9,12 +9,11 @@ pub struct Model {
     pub id: i32,
     #[sea_orm(column_type = "Text")]
     pub title: String,
-    pub image: Option<Vec<u8>>,
+    pub image: Option<String>,
     pub tier: String,
     pub kind: Option<String>,
     pub updated_at: Option<DateTime>,
     pub deleted_at: Option<DateTime>,
-    pub user_id: Option<i32>,
     pub game: String,
 }
 

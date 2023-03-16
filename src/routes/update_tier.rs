@@ -9,12 +9,11 @@ use crate::database::tiers::{Entity as Tasks, self};
 pub struct ReqTier {
     pub id: i32,
     pub title: String,
-    pub image: Option<Vec<u8>>,
+    pub image: Option<String>,
     pub tier: String,
     pub kind: Option<String>,
     pub updated_at: Option<DateTime>,
     pub deleted_at: Option<DateTime>,
-    pub user_id: Option<i32>,
     pub game: String
 }
 
@@ -31,7 +30,6 @@ pub async fn atomic_update(
          kind: Set(request_tier.kind),
          updated_at: Set(request_tier.updated_at),
          deleted_at: Set(request_tier.deleted_at),
-         user_id: Set(request_tier.user_id),
          game: Set(request_tier.game)
     };
     // Tasks::update(update_task)
