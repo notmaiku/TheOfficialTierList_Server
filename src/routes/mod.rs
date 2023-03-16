@@ -21,8 +21,9 @@ use update_tier::atomic_update;
 
 pub fn create_routes(database: DatabaseConnection) -> Router{
     let cors = CorsLayer::new()
-    .allow_methods([Method::GET, Method::POST])
-    .allow_origin(Any);
+        .allow_methods([Method::GET, Method::POST])
+        .allow_origin(Any);
+
     Router::new().route("/", get(hello_world))
         .route("/tiers", post(create_tier))
         .route("/tiers/create", post(create_multiple_tiers))
@@ -30,6 +31,6 @@ pub fn create_routes(database: DatabaseConnection) -> Router{
         .route("/tiers/:tier_id", get(get_one_tier))
         .route("/tiers/:tier_id", put(atomic_update))
         .route("/tiers/:tier_id", delete(delete_tier))
-        .layer(Extension(database))
         .layer(cors)
+        .layer(Extension(database))
 }
