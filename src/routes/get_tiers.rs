@@ -7,7 +7,6 @@ use serde::{Serialize, Deserialize};
 
 use crate::database::tiers::{Entity as Tiers};
 use crate::database::tiers;
-use http::{Request, Response, Method, header};
 
 #[derive(Serialize)]
 pub struct RespTier {
@@ -69,6 +68,5 @@ pub async fn get_all_tiers(
             kind: db_tier.kind,
         })
         .collect();
-    // Ok(Json(tiers.headers().get(header::ACCESS_CONTROL_ALLOW_ORIGIN).unwrap()))
     Ok(Json(tiers))
 }
