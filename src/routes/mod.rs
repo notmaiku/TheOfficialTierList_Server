@@ -31,6 +31,6 @@ pub fn create_routes(database: DatabaseConnection) -> Router{
         .route("/tiers/:tier_id", get(get_one_tier))
         .route("/tiers/:tier_id", put(atomic_update))
         .route("/tiers/:tier_id", delete(delete_tier))
-        .layer(cors)
         .layer(Extension(database))
+        .layer(cors)
 }

@@ -17,8 +17,8 @@ pub async fn run(database_uri: &str){
         }
     };
     let app = routes::create_routes(db);
-    let addr = SocketAddr::from(([0,0,0,0], 3000));
-
+    let addr = SocketAddr::from(([0,0,0,0], 3001));
+    println!("listening on {}", addr);
     axum::Server::bind(&addr)
         .serve(app.into_make_service())
         .await
