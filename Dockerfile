@@ -6,4 +6,6 @@ COPY . .
 
 RUN cargo build --release
 
+RUN cargo clean && cargo build
+
 CMD cargo run 
