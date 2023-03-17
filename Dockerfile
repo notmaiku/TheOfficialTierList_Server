@@ -5,7 +5,6 @@ RUN rustup target add wasm32-unknown-unknown
 WORKDIR /usr/src/totl_backend
 COPY . .
 
-RUN cd frontend && trunk build --release
 RUN cargo build --release
 
 FROM gcr.io/distroless/cc-debian10
