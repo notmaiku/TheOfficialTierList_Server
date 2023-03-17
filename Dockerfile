@@ -1,8 +1,9 @@
 FROM rust:latest as build
 
-COPY ./ ./
+WORKDIR /usr/src/app
+
+COPY . .
 
 RUN cargo build --release
 
-
-CMD ["./target/release/totl_backend"]
+CMD cargo run 
