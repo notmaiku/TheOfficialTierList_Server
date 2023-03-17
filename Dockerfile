@@ -9,7 +9,7 @@ RUN cargo build --release
 
 FROM gcr.io/distroless/cc-debian10
 
-COPY --from=build /usr/src/totl_backend/target/release /usr/local/bin/totl_backend
+COPY --from=build /usr/src/totl_backend/target/release/totl_backend /usr/local/bin/totl_backend
 
 WORKDIR /usr/local/bin
 CMD ["totl_backend"]
