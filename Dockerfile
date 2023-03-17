@@ -5,4 +5,4 @@ COPY . .
 RUN cargo build --release
 
 
-CMD ["/totl_backend"]
+CMD ["./target/release/totl_backend"]
