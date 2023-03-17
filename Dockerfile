@@ -1,24 +1,14 @@
-FROM rustlang/rust:nightly
-
-# Install node
-RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - \
-    && apt-get install -y nodejs \
-    && npm i -g yarn
-
-# Install wasm-pack
+FROM rust:1.66 as builder
+WORKDIR /usr/src/app
+COPY . . 
 RUN curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
 
-# Create app directory
-WORKDIR /usr/src/app
+RUN cargo build --release
 
-# Bundle app source
-COPY . .
+FROM debian:buster-slim
 
-# Install deps
-RUN yarn
+COPY --from=builder /usr/src/app/totl_backend /totl_backend
 
-# Build
-RUN yarn build
+WORKDIR /totl_backend
 
-# Start
-CMD [ "yarn", "start" ]
+CMD ["totl_backend"]
