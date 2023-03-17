@@ -1,15 +1,24 @@
-FROM rust:latest as build
+FROM rustlang/rust:nightly
 
-RUN rustup target add wasm32-unknown-unknown
+# Install node
+RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - \
+    && apt-get install -y nodejs \
+    && npm i -g yarn
 
-WORKDIR /usr/src/totl_backend
+# Install wasm-pack
+RUN curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
+
+# Create app directory
+WORKDIR /usr/src/app
+
+# Bundle app source
 COPY . .
 
-RUN cargo build --release
+# Install deps
+RUN yarn
 
-FROM gcr.io/distroless/cc-debian10
+# Build
+RUN yarn build
 
-COPY --from=build /usr/src/totl_backend/target/release/totl_backend /usr/local/bin/totl_backend
-
-WORKDIR /usr/local/bin
-CMD ["totl_backend"]
+# Start
+CMD [ "yarn", "start" ]
