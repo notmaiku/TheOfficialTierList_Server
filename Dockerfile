@@ -1,11 +1,15 @@
 FROM rust:latest as build
 
-WORKDIR /usr/src/app
+RUN rustup target add wasm32-unknown-unknown
 
+WORKDIR /usr/src/totl_backend
 COPY . .
 
 RUN cargo build --release
 
-RUN cargo clean && cargo build
+FROM gcr.io/distroless/cc-debian10
 
-CMD cargo run 
+COPY --from=build /usr/src/totl_backend/target/release/backend /usr/local/bin/backend
+
+WORKDIR /usr/local/bin
+CMD ["backend"]
