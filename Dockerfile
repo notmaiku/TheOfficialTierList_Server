@@ -7,7 +7,7 @@ RUN cargo build --release
 
 FROM debian:buster-slim
 
-COPY --from=builder /usr/src/app/totl_backend /totl_backend
+COPY --from=builder /usr/src/app/target/release/totl_backend /totl_backend
 
 WORKDIR /totl_backend
 
