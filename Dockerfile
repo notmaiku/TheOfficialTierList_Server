@@ -1,7 +1,5 @@
 FROM rust:latest as build
 
-RUN rustup target add wasm32-unknown-unknown
-
 WORKDIR /TOTL_BACKEND
 
 RUN cargo build --release
