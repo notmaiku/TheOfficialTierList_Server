@@ -20,9 +20,6 @@ use delete_tier::delete_tier;
 use update_tier::atomic_update;
 
 pub fn create_routes(database: DatabaseConnection) -> Router{
-    let cors = CorsLayer::new()
-        .allow_methods([Method::GET, Method::POST])
-        .allow_origin(Any);
 
     Router::new().route("/", get(hello_world))
         .route("/tiers", post(create_tier))
@@ -31,6 +28,11 @@ pub fn create_routes(database: DatabaseConnection) -> Router{
         .route("/tiers/:tier_id", get(get_one_tier))
         .route("/tiers/:tier_id", put(atomic_update))
         .route("/tiers/:tier_id", delete(delete_tier))
-        .layer(cors)
+        .layer(
+            CorsLayer::new()
+                .allow_methods([Method::GET, Method::POST])
+                .allow_headers([http::header::CONTENT_TYPE])
+                .allow_origin(Any),
+        )
         .layer(Extension(database))
 }
