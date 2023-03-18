@@ -17,8 +17,9 @@ pub async fn run(database_uri: &str){
             panic!();
         }
     };
+    let port = dotenvy::var("PORT").unwrap().parse().unwrap();
     let app = routes::create_routes(db);
-    let addr = SocketAddr::from(([0,0,0,0], dotenvy::var("PORT").unwrap()));
+    let addr = SocketAddr::from(([0,0,0,0], port));
     println!("listening on {}", addr);
     axum::Server::bind(&addr)
         .serve(app.into_make_service())
