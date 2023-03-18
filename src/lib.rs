@@ -5,9 +5,10 @@ use sea_orm::Database;
 use sea_orm::ConnectOptions;
 use tokio::time::Duration;
 use std::net::SocketAddr;
+use dotenvy::dotenv;
 
 pub async fn run(database_uri: &str){
-
+    dotenv().ok();
     let database_url = database_uri.to_owned();
     let db = match Database::connect(database_url).await {
         Ok(db) => db,
@@ -17,7 +18,7 @@ pub async fn run(database_uri: &str){
         }
     };
     let app = routes::create_routes(db);
-    let addr = SocketAddr::from(([0,0,0,0], 80));
+    let addr = SocketAddr::from(([0,0,0,0], dotenvy::var("PORT").unwrap()));
     println!("listening on {}", addr);
     axum::Server::bind(&addr)
         .serve(app.into_make_service())

@@ -1,14 +1,14 @@
-FROM rust:1.66 as builder
-WORKDIR /usr/src/app
-COPY . . 
-RUN curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
+FROM rust:latest as build
+
+WORKDIR /TOTL_BACKEND
+
+COPY . .
 
 RUN cargo build --release
 
-FROM debian:buster-slim
+FROM gcr.io/distroless/cc-debian11
 
-COPY --from=builder /usr/src/app/target/release/totl_backend /totl_backend
 
-WORKDIR /totl_backend
+COPY --from=build /TOTL_BACKEND/target/release/totl_backend /totl_backend
 
-CMD ["totl_backend"]
+CMD ["/totl_backend"]
