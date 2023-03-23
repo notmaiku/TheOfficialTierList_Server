@@ -19,6 +19,8 @@ use get_tiers::get_all_tiers;
 use delete_tier::delete_tier;
 use update_tier::atomic_update;
 
+use self::update_tier::update_multiple_tiers;
+
 pub fn create_routes(database: DatabaseConnection) -> Router{
 
     Router::new().route("/", get(hello_world))
@@ -28,6 +30,7 @@ pub fn create_routes(database: DatabaseConnection) -> Router{
         .route("/tiers/:tier_id", get(get_one_tier))
         .route("/tiers/:tier_id", put(atomic_update))
         .route("/tiers/:tier_id", delete(delete_tier))
+        .route("/tiers/update",put(update_multiple_tiers))
         .layer(
             CorsLayer::new()
                 .allow_methods([Method::GET, Method::POST])

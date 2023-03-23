@@ -40,3 +40,27 @@ pub async fn atomic_update(
         .map_err(|_| StatusCode::INTERNAL_SERVER_ERROR)?;
     return Ok(())
 }
+
+
+pub async fn update_multiple_tiers(
+    Extension(database): Extension<DatabaseConnection>,
+    Json(body): Json<Vec<ReqTier>>,
+) -> Result<(), StatusCode>{
+    let tasks = body.into_iter().map(|t| ReqTier {
+        id: t.id,
+        title: t.title,
+        image: t.image,
+        tier: t.tier,
+        kind: t.kind,
+        updated_at: t.updated_at,
+        deleted_at: t.deleted_at,
+        game: t.game,
+    });
+    for t in tasks{
+        atomic_update(Path(t.id), Extension(database.to_owned()) , Json(t))
+        .await
+        .map_err(|_| StatusCode::INTERNAL_SERVER_ERROR)?;
+    }
+    return Ok(())
+}
+    
