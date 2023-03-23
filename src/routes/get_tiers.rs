@@ -15,6 +15,7 @@ pub struct RespTier {
     image: Option<String>,
     tier: String,
     kind: Option<String>,
+    game: String,
 }
 
 pub async fn get_one_tier(
@@ -29,6 +30,7 @@ pub async fn get_one_tier(
             image: tier.image,
             tier: tier.tier,
             kind: tier.kind,
+            game: String,
         }))
     } else {
         Err(StatusCode::NOT_FOUND)
@@ -66,6 +68,7 @@ pub async fn get_all_tiers(
             image: db_tier.image,
             tier: db_tier.tier,
             kind: db_tier.kind,
+            game: db_tier.game
         })
         .collect();
     Ok(Json(tiers))
