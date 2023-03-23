@@ -30,7 +30,7 @@ pub async fn get_one_tier(
             image: tier.image,
             tier: tier.tier,
             kind: tier.kind,
-            game: String,
+            game: tier.game,
         }))
     } else {
         Err(StatusCode::NOT_FOUND)
