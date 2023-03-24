@@ -35,7 +35,7 @@ pub fn create_routes(database: DatabaseConnection) -> Router{
             CorsLayer::new()
                 .allow_methods([Method::GET, Method::POST, Method::PUT])
                 .allow_headers([http::header::CONTENT_TYPE])
-                .allow_origin("http://www.theofficialtierlist.com".parse::<HeaderValue>().unwrap()),
+                .allow_origin("https://www.theofficialtierlist.com".parse::<HeaderValue>().unwrap()),
         )
         .layer(Extension(database))
 }
