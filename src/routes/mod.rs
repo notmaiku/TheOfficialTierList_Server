@@ -10,7 +10,7 @@ use axum::{
     routing::{get, post, put, delete},
     Router, Extension, 
 };
-use http::{Request, Response, Method, header};
+use http::{Request, Response, Method, header, HeaderValue};
 use tower_http::cors::{Any, CorsLayer};
 use hello_world::hello_world;
 use create_tier::{create_tier, create_multiple_tiers};
@@ -35,7 +35,7 @@ pub fn create_routes(database: DatabaseConnection) -> Router{
             CorsLayer::new()
                 .allow_methods([Method::GET, Method::POST, Method::PUT])
                 .allow_headers([http::header::CONTENT_TYPE])
-                .allow_origin(Any),
+                .allow_origin("http://www.theofficialtierlist.com".parse::<HeaderValue>().unwrap()),
         )
         .layer(Extension(database))
 }
