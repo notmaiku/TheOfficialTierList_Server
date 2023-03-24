@@ -33,7 +33,7 @@ pub fn create_routes(database: DatabaseConnection) -> Router{
         .route("/tiers/update",put(update_multiple_tiers))
         .layer(
             CorsLayer::new()
-                .allow_methods([Method::GET, Method::POST])
+                .allow_methods([Method::GET, Method::POST, Method::PUT])
                 .allow_headers([http::header::CONTENT_TYPE])
                 .allow_origin(Any),
         )
