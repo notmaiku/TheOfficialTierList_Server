@@ -34,7 +34,7 @@ pub fn create_routes(database: DatabaseConnection) -> Router{
         .layer(
             CorsLayer::new()
                 .allow_methods([Method::GET, Method::POST, Method::PUT])
-                .allow_headers([http::header::CONTENT_TYPE])
+                .allow_headers(Any)
                 .allow_origin(Any),
         )
         .layer(Extension(database))
