@@ -11,6 +11,7 @@ pub struct Model {
     pub title: String,
     pub image: Option<String>,
     pub tier: String,
+    pub column: Option<i32>,
     pub kind: Option<String>,
     pub updated_at: Option<DateTime>,
     pub deleted_at: Option<DateTime>,

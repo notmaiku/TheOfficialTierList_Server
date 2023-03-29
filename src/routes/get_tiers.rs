@@ -14,6 +14,7 @@ pub struct RespTier {
     title: String,
     image: Option<String>,
     tier: String,
+    column: Option<i32>,
     kind: Option<String>,
     game: String,
 }
@@ -29,6 +30,7 @@ pub async fn get_one_tier(
             title: tier.title,
             image: tier.image,
             tier: tier.tier,
+            column: tier.column,
             kind: tier.kind,
             game: tier.game,
         }))
@@ -67,6 +69,7 @@ pub async fn get_all_tiers(
             title: db_tier.title,
             image: db_tier.image,
             tier: db_tier.tier,
+            column: db_tier.column,
             kind: db_tier.kind,
             game: db_tier.game
         })
