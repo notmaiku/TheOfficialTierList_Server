@@ -11,11 +11,14 @@ pub struct ReqTier {
     pub title: String,
     pub image: Option<String>,
     pub tier: String,
-    pub column: Option<i32>,
+    pub x: Option<i32>,
     pub kind: Option<String>,
     pub updated_at: Option<DateTime>,
     pub deleted_at: Option<DateTime>,
-    pub game: String
+    pub game: String,
+    pub user_id: Option<String>,
+    pub list_id: Option<String>,
+    pub role: Option<String>,
 }
 
 pub async fn atomic_update(
@@ -28,11 +31,14 @@ pub async fn atomic_update(
          title: Set(request_tier.title),
          image: Set(request_tier.image),
          tier: Set(request_tier.tier),
-         column: Set(request_tier.column),
+         x: Set(request_tier.x),
          kind: Set(request_tier.kind),
          updated_at: Set(request_tier.updated_at),
          deleted_at: Set(request_tier.deleted_at),
-         game: Set(request_tier.game)
+         game: Set(request_tier.game),
+         user_id: Set(request_tier.user_id),
+         list_id: Set(request_tier.list_id),
+         role: Set(request_tier.role)
     };
     // Tasks::update(update_task)
     Tasks::update(update_task)
@@ -53,11 +59,14 @@ pub async fn update_multiple_tiers(
         title: t.title,
         image: t.image,
         tier: t.tier,
-        column: t.column,
+        x: t.x,
         kind: t.kind,
         updated_at: t.updated_at,
         deleted_at: t.deleted_at,
         game: t.game,
+        list_id: t.list_id,
+        user_id: t.user_id,
+        role: t.role
     });
     for t in tasks{
         atomic_update(Path(t.id), Extension(database.to_owned()) , Json(t))

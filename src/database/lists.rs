@@ -3,12 +3,15 @@
 use sea_orm::entity::prelude::*;
 
 #[derive(Clone, Debug, PartialEq, DeriveEntityModel, Eq)]
-#[sea_orm(table_name = "bloonscolors")]
+#[sea_orm(table_name = "lists")]
 pub struct Model {
     #[sea_orm(primary_key)]
     pub id: i32,
-    pub start_color: String,
-    pub end_color: String,
+    pub title: Option<String>,
+    pub user_id: Option<String>,
+    pub game: Option<String>,
+    pub created_at: Option<DateTime>,
+    pub updated_at: Option<DateTime>,
 }
 
 #[derive(Copy, Clone, Debug, EnumIter, DeriveRelation)]

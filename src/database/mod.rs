@@ -3,5 +3,5 @@
 pub mod prelude;
 
 pub mod colors;
+pub mod lists;
 pub mod tiers;
-pub mod users;

@@ -1,0 +1,222 @@
+[
+  {
+    "title": "Dart Monkey",
+    "image": "./assets/i/DartMonkey.png",
+    "kind": "Primary",
+    "tier": "C",
+    "game": "bloons",
+    "user_id":"642bd7d3c156e8883e",
+    "table_id":"1",
+    "role":"admin"
+  },
+  {
+    "title": "Boomerang Monkey",
+    "image": "./assets/i/BoomerangMonkey.png",
+    "kind": "Primary",
+    "tier": "E",
+    "game": "bloons",
+    "user_id": "642bd7d3c156e8883ecbabba",
+    "table_id": "1",
+    "role": "admin"
+  },
+  {
+    "title": "Bomb Shooter",
+    "image": "./assets/i/BombShooter.png",
+    "kind": "Primary",
+    "tier": "D",
+    "game": "bloons",
+    "user_id": "642bd7d3c156e8883e",
+    "table_id": "1",
+    "role": "admin"
+  },
+  {
+    "title": "Tack Shooter",
+    "image": "./assets/i/TackShooter.png",
+    "kind": "Primary",
+    "tier": "E",
+    "game": "bloons",
+    "user_id":"642bd7d3c156e8883e",
+    "table_id":"1",
+    "role": "admin"
+  },
+  {
+    "title": "Ice Monkey",
+    "image": "./assets/i/IceMonkey.png",
+    "kind": "Primary",
+    "tier": "S",
+    "game": "bloons",
+    "user_id":"642bd7d3c156e8883e",
+    "table_id":"1",
+    "role":"admin"
+  },
+  {
+    "title": "Glue Gunner ",
+    "image": "./assets/i/GlueGunner.png",
+    "kind": "Primary",
+    "tier": "B",
+    "game": "bloons",
+    "user_id":"642bd7d3c156e8883e",
+    "table_id":"1",
+    "role":"admin"
+  },
+  {
+    "title": "Sniper Monkey ",
+    "image": "./assets/i/SniperMonkey.png",
+    "kind": "Military",
+    "tier": "B",
+    "game": "bloons",
+    "user_id":"642bd7d3c156e8883e",
+    "table_id":"1",
+    "role":"admin"
+  },
+  {
+    "title": "Monkey Sub ",
+    "image": "./assets/i/MonkeySub.png",
+    "kind": "Military",
+    "tier": "E",
+    "game": "bloons",
+    "user_id":"642bd7d3c156e8883e",
+    "table_id":"1",
+    "role":"admin"
+  },
+  {
+    "title": "Monkey Buccaneer ",
+    "image": "./assets/i/MonkeyBuccaneer.png",
+    "kind": "Military",
+    "tier": "B",
+    "game": "bloons",
+    "user_id":"642bd7d3c156e8883e",
+    "table_id":"1",
+    "role":"admin"
+  },
+  {
+    "title": "Monkey Ace ",
+    "image": "./assets/i/MonkeyAce.png",
+    "kind": "Military",
+    "tier": "A",
+    "game": "bloons",
+    "user_id":"642bd7d3c156e8883e",
+    "table_id":"1",
+    "role":"admin"
+  },
+  {
+    "title": "Heli Pilot ",
+    "image": "./assets/i/HeliPilot.png",
+    "kind": "Military",
+    "tier": "A",
+    "game": "bloons",
+    "user_id":"642bd7d3c156e8883e",
+    "table_id":"1",
+    "role":"admin"
+  },
+  {
+    "title": "Mortar Monkey",
+    "image": "./assets/i/MortarMonkey.png",
+    "kind": "Military",
+    "tier": "C",
+    "game": "bloons",
+    "user_id":"642bd7d3c156e8883e",
+    "table_id":"1",
+    "role":"admin"
+  },
+  {
+    "title": "Dartling Gunner ",
+    "image": "./assets/i/DartlingGunner.png",
+    "kind": "Military",
+    "tier": "D",
+    "game": "bloons",
+    "user_id":"642bd7d3c156e8883e",
+    "table_id":"1",
+    "role":"admin"
+  },
+  {
+    "title": "Wizard Monkey",
+    "image": "./assets/i/WizardMonkey.png",
+    "kind": "Magic",
+    "tier": "E",
+    "game": "bloons",
+    "user_id":"642bd7d3c156e8883e",
+    "table_id":"1",
+    "role":"admin"
+  },
+  {
+    "title": "Super Monkey ",
+    "image": "./assets/i/SuperMonkey.png",
+    "kind": "Magic",
+    "tier": "B",
+    "game": "bloons",
+    "user_id":"642bd7d3c156e8883e",
+    "table_id":"1",
+    "role":"admin"
+  },
+  {
+    "title": "Ninja Monkey ",
+    "image": "./assets/i/NinjaMonkey.png",
+    "kind": "Magic",
+    "tier": "A",
+    "game": "bloons",
+    "user_id":"642bd7d3c156e8883e",
+    "table_id":"1",
+    "role":"admin"
+  },
+  {
+    "title": "Alchemist",
+    "image": "./assets/i/Alchemist.png",
+    "kind": "Magic",
+    "tier": "D",
+    "game": "bloons",
+    "user_id":"642bd7d3c156e8883e",
+    "table_id":"1",
+    "role":"admin"
+  },
+  {
+    "title": "Druid",
+    "image": "./assets/i/Druid.png",
+    "kind": "Magic",
+    "tier": "C",
+    "game": "bloons",
+    "user_id":"642bd7d3c156e8883e",
+    "table_id":"1",
+    "role":"admin"
+  },
+  {
+    "title": "Banana Farm ",
+    "image": "./assets/i/BananaFarm.png",
+    "kind": "Support",
+    "tier": "B",
+    "game": "bloons",
+    "user_id":"642bd7d3c156e8883e",
+    "table_id":"1",
+    "role":"admin"
+  },
+  {
+    "title": "Spike Factory ",
+    "image": "./assets/i/SpikeFactory.png",
+    "kind": "Support",
+    "tier": "C",
+    "game": "bloons",
+    "user_id":"642bd7d3c156e8883e",
+    "table_id":"1",
+    "role":"admin"
+  },
+  {
+    "title": "Monkey Village ",
+    "image": "./assets/i/MonkeyVillage.png",
+    "kind": "Support",
+    "tier": "D",
+    "game": "bloons",
+    "user_id":"642bd7d3c156e8883e",
+    "table_id":"1",
+    "role":"admin"
+  },
+  {
+    "title": "Engineer Monkey",
+    "image": "./assets/i/EngineerMonkey.png",
+    "kind": "Support",
+    "tier": "S",
+    "game": "bloons",
+    "user_id":"642bd7d3c156e8883e",
+    "table_id":"1",
+    "role":"admin"
+  }
+]

@@ -3,6 +3,8 @@ mod create_tier;
 mod get_tiers;
 mod delete_tier;
 mod update_tier;
+mod create_list;
+mod get_lists;
 
 use sea_orm::{DatabaseConnection};
 use axum::{
@@ -10,27 +12,32 @@ use axum::{
     routing::{get, post, put, delete},
     Router, Extension, 
 };
-use http::{Request, Response, Method, header};
+use dotenvy::dotenv;
+use http::{Request, Response, Method, header, HeaderValue};
 use tower_http::cors::{Any, CorsLayer};
 use hello_world::hello_world;
 use create_tier::{create_tier, create_multiple_tiers};
+use create_list::create_list;
 use get_tiers::get_one_tier;
 use get_tiers::get_all_tiers;
+use get_lists::get_one_list;
+use get_lists::get_users_list;
 use delete_tier::delete_tier;
 use update_tier::atomic_update;
 
 use self::update_tier::update_multiple_tiers;
-
 pub fn create_routes(database: DatabaseConnection) -> Router{
 
     Router::new().route("/", get(hello_world))
-        .route("/tiers", post(create_tier))
-        .route("/tiers/create", post(create_multiple_tiers))
-        .route("/:game/tiers", get(get_all_tiers))
+        .route("/tiers/one", post(create_tier))
+        .route("/tiers/multiple", post(create_multiple_tiers))
+        .route("/tiers/user/:user_id/game/:game", get(get_all_tiers))
         .route("/tiers/:tier_id", get(get_one_tier))
         .route("/tiers/:tier_id", put(atomic_update))
         .route("/tiers/:tier_id", delete(delete_tier))
         .route("/tiers/update",put(update_multiple_tiers))
+        .route("/lists/user/:user_id", get(get_users_list))
+        .route("/lists/:list_id", get(get_one_list))
         .layer(
             CorsLayer::new()
                 .allow_methods([Method::GET, Method::POST, Method::PUT])

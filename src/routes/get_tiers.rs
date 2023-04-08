@@ -1,4 +1,5 @@
 use core::str;
+use std::collections::HashMap;
 
 use axum::{extract::{Path, Query}, http::StatusCode, Extension, Json};
 use sea_orm::{DatabaseConnection, DbErr, EntityTrait, Condition, QueryFilter, ColumnTrait};
@@ -14,9 +15,10 @@ pub struct RespTier {
     title: String,
     image: Option<String>,
     tier: String,
-    column: Option<i32>,
+    x: Option<i32>,
     kind: Option<String>,
     game: String,
+    user_id: Option<String>
 }
 
 pub async fn get_one_tier(
@@ -30,9 +32,10 @@ pub async fn get_one_tier(
             title: tier.title,
             image: tier.image,
             tier: tier.tier,
-            column: tier.column,
+            x: tier.x,
             kind: tier.kind,
             game: tier.game,
+            user_id: tier.user_id
         }))
     } else {
         Err(StatusCode::NOT_FOUND)
@@ -41,25 +44,32 @@ pub async fn get_one_tier(
 
 #[derive(Deserialize)]
 pub struct GetTiersQueryParams {
-    kind: Option<String>,
-    game: Option<String>
+    user_id: Option<String>,
+    game: Option<String>,
+    kind: Option<String>
 }
 
 pub async fn get_all_tiers(
     Extension(database): Extension<DatabaseConnection>,
-    Query(query_params): Query<GetTiersQueryParams>
+    Query(query_params): Query<GetTiersQueryParams>,
+    Path(params): Path<HashMap<String, String>>
 ) -> Result<Json<Vec<RespTier>>, StatusCode> {
     let mut kind_filter = Condition::all();
     if let Some(kind) = query_params.kind {
         kind_filter = kind_filter.add(tiers::Column::Kind.eq(kind));
     }
     let mut game_filter = Condition::all();
-    if let Some(game) = query_params.game {
-        game_filter = game_filter.add(tiers::Column::Game.eq(game));
+    if let Some(params) = params.get("game") {
+        game_filter = game_filter.add(tiers::Column::Game.eq(params));
+    }
+    let mut user_id_filter = Condition::all();
+    if let Some(params) = params.get("user_id") {
+        user_id_filter = user_id_filter.add(tiers::Column::UserId.eq(params));
     }
     let tiers = Tiers::find()
         .filter(kind_filter)
         .filter(game_filter)
+        .filter(user_id_filter)
         .all(&database)
         .await
         .map_err(|_err: DbErr| StatusCode::INTERNAL_SERVER_ERROR)?
@@ -69,9 +79,10 @@ pub async fn get_all_tiers(
             title: db_tier.title,
             image: db_tier.image,
             tier: db_tier.tier,
-            column: db_tier.column,
+            x: db_tier.x,
             kind: db_tier.kind,
-            game: db_tier.game
+            game: db_tier.game,
+            user_id: db_tier.user_id
         })
         .collect();
     Ok(Json(tiers))

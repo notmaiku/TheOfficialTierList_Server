@@ -9,13 +9,17 @@ pub struct Model {
     pub id: i32,
     #[sea_orm(column_type = "Text")]
     pub title: String,
+    #[sea_orm(column_type = "Text", nullable)]
     pub image: Option<String>,
     pub tier: String,
-    pub column: Option<i32>,
     pub kind: Option<String>,
     pub updated_at: Option<DateTime>,
     pub deleted_at: Option<DateTime>,
     pub game: String,
+    pub x: Option<i32>,
+    pub user_id: Option<String>,
+    pub list_id: Option<String>,
+    pub role: Option<String>,
 }
 
 #[derive(Copy, Clone, Debug, EnumIter, DeriveRelation)]

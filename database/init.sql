@@ -6,7 +6,11 @@ CREATE TABLE IF NOT EXISTS tiers (
   kind          VARCHAR(50) DEFAULT 'normal',
   updated_at    TIMESTAMP DEFAULT NULL,
   deleted_at    TIMESTAMP DEFAULT NULL,
-  game          VARCHAR(256) NOT NULL
+  game          VARCHAR(256) NOT NULL,
+  x             INTEGER DEFAULT NULL,
+  user_id       VARCHAR(256) DEFAULT NULL,
+  list_id       VARCHAR(256) DEFAULT NULL,
+  role          VARCHAR(256) DEFAULT NULL
 );
 
 CREATE TABLE IF NOT EXISTS colors(
@@ -17,7 +21,11 @@ CREATE TABLE IF NOT EXISTS colors(
   game VARCHAR(256) NOT NULL
 );
 
-
-
-INSERT INTO tiers (priority, title, description, is_default) VALUES 
-  ('Sniper Monkey', './assets/i/SniperMonkey.png','Military','S'),
+CREATE TABLE IF NOT EXISTS lists(
+  id            SERIAL PRIMARY KEY,
+  title         VARCHAR(256),
+  user_id       VARCHAR(256),
+  game          VARCHAR(256),
+  created_at    TIMESTAMP DEFAULT NULL,
+  updated_at    TIMESTAMP DEFAULT NULL
+);
