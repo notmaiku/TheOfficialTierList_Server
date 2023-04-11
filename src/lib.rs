@@ -2,8 +2,6 @@ mod database;
 mod routes;
 
 use sea_orm::Database;
-use sea_orm::ConnectOptions;
-use tokio::time::Duration;
 use std::net::SocketAddr;
 use dotenvy::dotenv;
 
