@@ -16,7 +16,7 @@ pub struct Model {
     pub updated_at: Option<DateTime>,
     pub deleted_at: Option<DateTime>,
     pub game: String,
-    pub x: Option<i32>,
+    pub hori: Option<i32>,
     pub user_id: Option<String>,
     pub list_id: Option<String>,
     pub role: Option<String>,
