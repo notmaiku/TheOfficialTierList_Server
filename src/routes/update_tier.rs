@@ -40,7 +40,6 @@ pub async fn atomic_update(
          list_id: Set(request_tier.list_id),
          role: Set(request_tier.role)
     };
-    // Tasks::update(update_task)
     Tasks::update(update_task)
         .filter(tiers::Column::Id.eq(tier_id))
         .exec(&database)

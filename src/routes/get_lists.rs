@@ -20,7 +20,7 @@ pub struct RespList {
 }
 
 pub async fn get_one_list(
-    Path(list_id): Path<i32>,
+    Path(list_id): Path<i32>, 
     Extension(database): Extension<DatabaseConnection>,
 ) -> Result<Json<RespList>, StatusCode> {
     let list = Lists::find_by_id(list_id).one(&database).await.unwrap();
@@ -36,10 +36,29 @@ pub async fn get_one_list(
     }
 }
 
+pub async fn get_list_by_name_n_game(
+    Path(params): Path<(String, String)>, 
+    Extension(database): Extension<DatabaseConnection>,
+) -> Result<Json<RespList>, StatusCode> {
+    let list = Lists::find()
+    .filter(lists::Column::Title.eq(params.0))
+    .filter(lists::Column::Game.eq(params.1))
+    .one(&database).await.unwrap();
+    if let Some(list) = list {
+        Ok(Json(RespList {
+            id: list.id,
+            title: list.title,
+            game: list.game,
+            user_id: list.user_id
+        }))
+    } else {
+        Err(StatusCode::NOT_FOUND)
+    }
+}
 
 pub async fn get_users_list(
     Extension(database): Extension<DatabaseConnection>,
-    Path(user_id): Path<String>
+    Path(user_id): Path<Uuid>
 ) -> Result<Json<Vec<RespList>>, StatusCode> {
     let lists = Lists::find()
         .filter(Condition::all().add(lists::Column::UserId.eq(user_id)))
