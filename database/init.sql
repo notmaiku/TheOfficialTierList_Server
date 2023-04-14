@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS tiers (
   updated_at    TIMESTAMP DEFAULT NULL,
   deleted_at    TIMESTAMP DEFAULT NULL,
   game          VARCHAR(256) NOT NULL,
-  x            INTEGER DEFAULT NULL,
+  hori            INTEGER DEFAULT NULL,
   user_id       VARCHAR(256) DEFAULT NULL,
   list_id       VARCHAR(256) DEFAULT NULL,
   role          VARCHAR(256) DEFAULT NULL

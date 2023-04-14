@@ -21,17 +21,12 @@ use tower_http::cors::{Any, CorsLayer};
 use hello_world::hello_world;
 use create_tier::{create_tier, create_multiple_tiers};
 use create_list::create_list;
-use get_tiers::get_one_tier;
-use get_tiers::get_all_tiers;
-use get_lists::get_one_list;
-use get_lists::get_list_by_name_n_game;
-use get_lists::get_users_list;
-use get_lists::get_list_rows;
+use get_tiers::{get_one_tier,get_all_tiers};
+use get_lists::{get_one_list,get_list_by_name_n_game,get_users_list,get_list_rows};
 use update_list::update_list;
 use delete_list::delete_list;
-use delete_tier::delete_tier;
-use update_tier::atomic_update;
-use update_tier::update_multiple_tiers;
+use delete_tier::{delete_tier, delete_many_tiers};
+use update_tier::{atomic_update,update_multiple_tiers};
 
 pub fn create_routes(database: DatabaseConnection) -> Router{
 
@@ -43,6 +38,7 @@ pub fn create_routes(database: DatabaseConnection) -> Router{
         .route("/tiers/:tier_id", get(get_one_tier))
         .route("/tiers/:tier_id", put(atomic_update))
         .route("/tiers/:tier_id", delete(delete_tier))
+        .route("/tiers/list/:list_id", delete(delete_many_tiers))
         .route("/tiers/update",put(update_multiple_tiers))
         .route("/lists/user/:user_id", get(get_users_list))
         .route("/lists/:list_id", get(get_one_list))

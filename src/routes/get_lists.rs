@@ -1,12 +1,12 @@
 use axum::{extract::Path, http::StatusCode, Extension, Json};
 use sea_orm::{
     ColumnTrait, Condition, DatabaseConnection, DbErr, EntityTrait, PaginatorTrait, QueryFilter,
+    QueryOrder,
 };
-use serde::{Serialize};
+use serde::Serialize;
 
 use crate::database::lists;
 use crate::database::lists::Entity as Lists;
-
 
 #[derive(Serialize)]
 pub struct RespList {
@@ -78,9 +78,13 @@ pub async fn get_users_list(
 pub async fn get_list_rows(
     Extension(database): Extension<DatabaseConnection>,
 ) -> Result<String, StatusCode> {
-    let rows = Lists::find().count(&database).await.unwrap();
-    if let Some(rows) = Some(rows) {
-        Ok(rows.to_string())
+    let last = Lists::find()
+        .order_by(lists::Column::Id, sea_orm::Order::Desc)
+        .one(&database)
+        .await
+        .unwrap();
+    if let Some(last) = last {
+        Ok(last.id.to_string())
     } else {
         Err(StatusCode::NOT_FOUND)
     }
