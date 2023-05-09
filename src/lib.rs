@@ -1,25 +1,56 @@
-mod database;
-mod routes;
+mod db;
+mod graphql;
 
-use sea_orm::Database;
-use std::net::SocketAddr;
+use entity::async_graphql;
+
+use async_graphql::http::{playground_source, GraphQLPlaygroundConfig};
+use async_graphql_axum::{GraphQLRequest, GraphQLResponse};
+use axum::{
+    extract::Extension,
+    response::{Html, IntoResponse},
+    routing::get,
+    Router, http::Method,
+};
+use tower_http::cors::{Any, CorsLayer};
+use graphql::schema::{build_schema, AppSchema};
+
+#[cfg(debug_assertions)]
 use dotenvy::dotenv;
 
-pub async fn run(database_uri: &str){
+async fn graphql_handler(schema: Extension<AppSchema>, req: GraphQLRequest) -> GraphQLResponse {
+    schema.execute(req.into_inner()).await.into()
+}
+
+async fn graphql_playground() -> impl IntoResponse {
+    Html(playground_source(GraphQLPlaygroundConfig::new(
+        "/api/graphql",
+    )))
+}
+
+pub async fn run() {
+    #[cfg(debug_assertions)]
     dotenv().ok();
-    let database_url = database_uri.to_owned();
-    let db = match Database::connect(database_url).await {
-        Ok(db) => db,
-        Err(error) => {
-            eprintln!("Error connecting to the database: {:?}", error);
-            panic!();
-        }
-    };
-    let port = dotenvy::var("PORT").unwrap().parse().unwrap();
-    let app = routes::create_routes(db);
-    let addr = SocketAddr::from(([0,0,0,0], port));
-    println!("listening on {}", addr);
-    axum::Server::bind(&addr)
+
+    let schema = build_schema().await;
+
+    let cors = CorsLayer::new()
+    // allow `GET` and `POST` when accessing the resource
+    .allow_methods([Method::GET, Method::POST])
+    // allow requests from any origin
+    .allow_origin(Any);
+
+    let app = Router::new()
+        .route(
+            "/api/graphql",
+            get(graphql_playground).post(graphql_handler),
+        )
+        .layer(Extension(schema))
+        .layer(cors)
+        ;
+
+    println!("Playground: http://localhost:3000/api/graphql");
+
+    axum::Server::bind(&"0.0.0.0:3000".parse().unwrap())
         .serve(app.into_make_service())
         .await
         .unwrap();
