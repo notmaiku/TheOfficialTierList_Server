@@ -3,7 +3,6 @@ use async_graphql::{Context, Object, Result};
 use entity::async_graphql::{self, InputObject, InputType, SimpleObject};
 use graphql_example_core::sea_orm::{ActiveModelTrait, Set, InsertResult};
 use graphql_example_core::Mutation;
-use migration::DbErr;
 
 use crate::db::Database;
 
