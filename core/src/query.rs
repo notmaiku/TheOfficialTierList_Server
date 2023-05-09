@@ -13,8 +13,8 @@ impl Query {
         List::find_by_id(id).one(db).await
     }
 
-    pub async fn get_all_lists(db: &DbConn) -> Result<Vec<lists::Model>, DbErr> {
-        List::find().all(db).await
+    pub async fn get_all_lists(db: &DbConn, user_id: String) -> Result<Vec<lists::Model>, DbErr> {
+        List::find().filter(Condition::all().add(lists::Column::UserId.eq(user_id))).all(db).await
     }
 
     pub async fn get_all_tiers(db: &DbConn) -> Result<Vec<tiers::Model>, DbErr> {

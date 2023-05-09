@@ -17,11 +17,11 @@ impl ListQuery {
             .await
             .map_err(|e| e.to_string())?)
     }
-    async fn get_lists(&self, ctx: &Context<'_>) -> Result<Vec<lists::Model>> {
+    async fn get_lists(&self, ctx: &Context<'_>, user_id: String) -> Result<Vec<lists::Model>> {
         let db = ctx.data::<Database>().unwrap();
         let conn = db.get_connection();
 
-        Ok(Query::get_all_lists(conn)
+        Ok(Query::get_all_lists(conn, user_id)
             .await
             .map_err(|e| e.to_string())?)
     } 
