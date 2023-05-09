@@ -19,10 +19,9 @@ validator = { version = "0.16.0", features = ["derive"] }
 graphql-example-core = { path = "core" }
 async-graphql-axum = "5.0.7"
 entity = { path = "entity" }
-migration = { path = "migration"}
 
 [workspace]
-members = [".", "core", "entity", "migration" ]
+members = [".", "core", "entity"]
 
 [lib]
 name = "totl_backend"
