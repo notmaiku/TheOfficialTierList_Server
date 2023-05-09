@@ -11,8 +11,7 @@ use axum::{
     routing::get,
     Router, http::Method,
 };
-use http::HeaderValue;
-use tower_http::cors::{Any, CorsLayer};
+use tower_http::cors::{CorsLayer, Any};
 use graphql::schema::{build_schema, AppSchema};
 
 #[cfg(debug_assertions)]
@@ -38,8 +37,8 @@ pub async fn run() {
     // allow `GET` and `POST` when accessing the resource
     .allow_methods([Method::GET, Method::POST, Method::PUT, Method::DELETE])
     // allow requests from any origin
-    .allow_origin("http://theofficialtierlist.com".parse::<HeaderValue>().unwrap());
-    // .allow_origin(Any);
+    // .allow_origin("http://theofficialtierlist.com".parse::<HeaderValue>().unwrap());
+    .allow_origin(Any);
 
     let app = Router::new()
         .route(

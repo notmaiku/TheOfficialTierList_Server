@@ -1,6 +1,6 @@
 use async_graphql::{Context, Object, Result};
 use entity::{async_graphql, tiers};
-use graphql_example_core::{Query, sea_orm::QueryResult};
+use graphql_example_core::{Query};
 
 use crate::db::Database;
 
@@ -26,13 +26,6 @@ impl TierQuery {
             .await
             .map_err(|e| e.to_string())?)
     }
-
-    // async fn get_last_tier(&self, ctx: &Context<'_>) -> QueryResult {
-    //     let db = ctx.data::<Database>().unwrap();
-    //     let conn = db.get_connection();
-
-    //     Ok(entity::tiers::Entity::)
-    // }
 
     pub async fn get_all_tiers(
         &self,

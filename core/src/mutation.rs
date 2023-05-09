@@ -1,4 +1,4 @@
-use ::entity::{lists::ActiveModel, tiers, tiers::Entity as Tiers};
+use ::entity::{tiers, tiers::Entity as Tiers};
 use sea_orm::*;
 
 pub struct ReqList {
@@ -58,7 +58,7 @@ impl Mutation {
         id: i32,
         form_data: tiers::Model,
     ) -> Result<tiers::Model, DbErr> {
-        let tiers: tiers::ActiveModel = Tiers::find_by_id(id)
+        let _tiers: tiers::ActiveModel = Tiers::find_by_id(id)
             .one(db)
             .await?
             .ok_or(DbErr::Custom("Cannot find tiers.".to_owned()))
@@ -102,8 +102,8 @@ impl Mutation {
                 .await
                 .map_err(|_| DbErr::Custom("Could not update tier".to_owned()));
             match res {
-                Ok(r) => c += 1,
-                Err(e) => c = 0,
+                Ok(_) => c += 1,
+                Err(_) => c = 0,
             }
         }
         Ok(UpdateResult { rows_affected: c })

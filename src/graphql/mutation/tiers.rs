@@ -1,7 +1,7 @@
 use ::entity::{tiers, tiers::Entity as Tiers};
 use async_graphql::{Context, Object, Result};
-use entity::async_graphql::{self, InputObject, InputType, SimpleObject};
-use graphql_example_core::sea_orm::{ActiveModelTrait, Set, InsertResult};
+use entity::async_graphql::{self, InputObject, SimpleObject};
+use graphql_example_core::sea_orm::{ActiveModelTrait, Set};
 use graphql_example_core::Mutation;
 use migration::DbErr;
 
@@ -117,8 +117,8 @@ impl TiersMutation {
                 .await
                 .map_err(|_| DbErr::Custom("Could not update tier".to_owned()));
             match res {
-                Ok(r) => c += 1,
-                Err(e) => c = 0,
+                Ok(_) => c += 1,
+                Err(_) => c = 0,
             }
         }
         let rows = c;
@@ -139,7 +139,7 @@ impl TiersMutation {
     ) -> Result<tiers::Model, DbErr> {
         let db = ctx.data::<Database>().unwrap();
         let conn = db.get_connection();
-        let tiers: tiers::ActiveModel = Tiers::find_by_id(input.id.unwrap())
+        let _tiers: tiers::ActiveModel = Tiers::find_by_id(input.id.unwrap())
             .one(conn)
             .await?
             .ok_or(DbErr::Custom("Cannot find tiers.".to_owned()))
