@@ -37,7 +37,7 @@ pub async fn run() {
     // allow `GET` and `POST` when accessing the resource
     .allow_methods([Method::GET, Method::POST, Method::PUT, Method::DELETE])
     // allow requests from any origin
-    // .allow_origin("http://theofficialtierlist.com".parse::<HeaderValue>().unwrap());
+    .allow_origin("https://theofficialtierlist.com".parse::<HeaderValue>().unwrap());
     .allow_origin(Any);
 
     let app = Router::new()
