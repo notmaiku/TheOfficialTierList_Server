@@ -6,7 +6,8 @@ COPY . .
 
 RUN cargo build --release
 
-FROM debian:bullseye-slim
+FROM gcr.io/distroless/cc-debian11
+
 
 COPY --from=build /TOTL_BACKEND/target/release/totl_backend /totl_backend
 
