@@ -1,4 +1,4 @@
-FROM rust:1.49-slim-buster as build
+FROM rust:1.71.0-slim-buster as build
 
 WORKDIR /TOTL_BACKEND
 
