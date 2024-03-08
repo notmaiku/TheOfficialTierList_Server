@@ -38,6 +38,7 @@ pub async fn run() {
     .allow_methods([Method::GET, Method::POST, Method::PUT, Method::DELETE])
     // allow requests from any origin
     // .allow_origin("http://theofficialtierlist.com".parse::<HeaderValue>().unwrap());
+    .allow_headers(Any)
     .allow_origin(Any);
 
     let app = Router::new()
