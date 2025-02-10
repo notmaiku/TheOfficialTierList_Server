@@ -2,9 +2,6 @@
 # Build Stage - Use lightweight Rust image
 FROM rust:slim as build
 
-# Install minimal dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends musl-tools
-
 WORKDIR /TOTL_BACKEND
 
 # Cache dependencies
