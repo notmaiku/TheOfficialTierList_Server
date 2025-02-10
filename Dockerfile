@@ -1,28 +1,31 @@
-# Use the latest stable Rust slim image
-FROM rust:latest as build
+# Build Stage - Use a minimal Rust image
+FROM rust:alpine as build
 
-# Set working directory
+# Install only essential dependencies
+RUN apk add --no-cache musl-dev gcc
+
 WORKDIR /TOTL_BACKEND
 
-# Copy only Cargo files first for better caching
+# Cache dependencies for faster builds
 COPY Cargo.toml Cargo.lock ./
-RUN mkdir src && echo "fn main() {}" > src/main.rs
-RUN cargo build --release
+RUN mkdir src && echo "fn main() {}" > src/main.rs && cargo build --release
 
-# Copy the rest of the source code and build
+# Copy the actual source code and build
 COPY . .
 RUN cargo build --release
 
-# Use a more recent slim Debian base image
-FROM debian:bookworm-slim
+# Runtime Stage - Use a tiny Alpine base image
+FROM alpine:latest
 
-# Set a non-root user for better security
-RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates && rm -rf /var/lib/apt/lists/*
+# Install only required system dependencies
+RUN apk add --no-cache ca-certificates
 
+# Use a non-root user for security
 USER nobody
 
-# Copy the built binary from the builder stage
+# Copy only the built binary (no source code)
 COPY --from=build /TOTL_BACKEND/target/release/totl_backend /totl_backend
 
-# Set the entrypoint
+# Start the application
 CMD ["/totl_backend"]
+
