@@ -1,3 +1,4 @@
+
 # Build Stage - Use a minimal Rust image
 FROM rust:alpine as build
 
@@ -10,22 +11,22 @@ WORKDIR /TOTL_BACKEND
 COPY Cargo.toml Cargo.lock ./
 RUN mkdir src && echo "fn main() {}" > src/main.rs && cargo build --release
 
-# Copy the actual source code and build
+# Copy actual source code and build the final binary
 COPY . .
 RUN cargo build --release
 
-# Runtime Stage - Use a tiny Alpine base image
+# Runtime Stage - Use a small Alpine image
 FROM alpine:latest
 
-# Install only required system dependencies
-RUN apk add --no-cache ca-certificates
+# Install CA certificates (needed for HTTPS)
+RUN apk add --no-cache ca-certificates && update-ca-certificates
 
-# Use a non-root user for security
+# Set a non-root user for security
 USER nobody
 
-# Copy only the built binary (no source code)
+# Copy only the built binary
 COPY --from=build /TOTL_BACKEND/target/release/totl_backend /totl_backend
 
-# Start the application
+# Railway provides a default PORT environment variable; no need to expose a port
 CMD ["/totl_backend"]
 
