@@ -18,12 +18,6 @@ RUN cargo build --release
 # Runtime Stage - Use a small Alpine image
 FROM alpine:latest
 
-# Install CA certificates (needed for HTTPS)
-RUN apk add --no-cache ca-certificates && update-ca-certificates
-
-# Set a non-root user for security
-USER nobody
-
 # Copy only the built binary
 COPY --from=build /TOTL_BACKEND/target/release/totl_backend /totl_backend
 
