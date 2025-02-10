@@ -2,6 +2,7 @@ mod db;
 mod graphql;
 
 use entity::async_graphql;
+use http::HeaderValue;
 
 use async_graphql::http::{playground_source, GraphQLPlaygroundConfig};
 use async_graphql_axum::{GraphQLRequest, GraphQLResponse};
@@ -37,9 +38,9 @@ pub async fn run() {
     // allow `GET` and `POST` when accessing the resource
     .allow_methods([Method::GET, Method::POST, Method::PUT, Method::DELETE])
     // allow requests from any origin
-    // .allow_origin("http://theofficialtierlist.com".parse::<HeaderValue>().unwrap());
-    .allow_headers(Any)
-    .allow_origin(Any);
+    .allow_origin("http://theofficialtierlist.com".parse::<HeaderValue>().unwrap())
+    .allow_headers(Any);
+    // .allow_origin(Any);
 
     let app = Router::new()
         .route(
