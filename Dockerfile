@@ -14,8 +14,12 @@
 
 FROM rust:slim AS build  
 WORKDIR /app  
-COPY . .  
+
+# Install musl and other minimal dependencies  
 RUN apt-get update && apt-get install -y --no-install-recommends musl-tools  
+RUN rustup target add x86_64-unknown-linux-musl  
+
+COPY . .  
 RUN cargo build --release --target=x86_64-unknown-linux-musl  
 
 FROM debian:bookworm-slim  
