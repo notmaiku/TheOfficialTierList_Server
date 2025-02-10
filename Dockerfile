@@ -1,13 +1,13 @@
 
-# Build Stage - Use a minimal Rust image
-FROM rust:alpine as build
+# Build Stage - Use lightweight Rust image
+FROM rust:slim as build
 
-# Install only essential dependencies
-RUN apk add --no-cache musl-dev gcc
+# Install minimal dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends musl-tools
 
 WORKDIR /TOTL_BACKEND
 
-# Cache dependencies for faster builds
+# Cache dependencies
 COPY Cargo.toml Cargo.lock ./
 RUN mkdir src && echo "fn main() {}" > src/main.rs && cargo build --release
 
@@ -15,12 +15,18 @@ RUN mkdir src && echo "fn main() {}" > src/main.rs && cargo build --release
 COPY . .
 RUN cargo build --release
 
-# Runtime Stage - Use a small Alpine image
-FROM alpine:latest
+# Runtime Stage - Use minimal Debian base
+FROM debian:bookworm-slim
 
-# Copy only the built binary
+# Install only required system dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates && rm -rf /var/lib/apt/lists/*
+
+# Use a non-root user
+USER nobody
+
+# Copy the built binary
 COPY --from=build /TOTL_BACKEND/target/release/totl_backend /totl_backend
 
-# Railway provides a default PORT environment variable; no need to expose a port
+# Start the application
 CMD ["/totl_backend"]
 
