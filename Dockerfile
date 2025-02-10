@@ -18,11 +18,6 @@ RUN cargo build --release
 # Runtime Stage - Use minimal Debian base
 FROM debian:bookworm-slim
 
-# Install only required system dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates && rm -rf /var/lib/apt/lists/*
-
-# Use a non-root user
-USER nobody
 
 # Copy the built binary
 COPY --from=build /TOTL_BACKEND/target/release/totl_backend /totl_backend
