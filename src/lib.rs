@@ -8,12 +8,13 @@ use async_graphql::http::{playground_source, GraphQLPlaygroundConfig};
 use async_graphql_axum::{GraphQLRequest, GraphQLResponse};
 use axum::{
     extract::Extension,
+    http::Method,
     response::{Html, IntoResponse},
     routing::get,
-    Router, http::Method,
+    Router,
 };
-use tower_http::cors::{CorsLayer, Any};
 use graphql::schema::{build_schema, AppSchema};
+use tower_http::cors::{Any, CorsLayer};
 
 #[cfg(debug_assertions)]
 use dotenvy::dotenv;
@@ -34,12 +35,18 @@ pub async fn run() {
 
     let schema = build_schema().await;
 
+    let allowed_origin = "https://theofficialtierlist.com";
+
     let cors = CorsLayer::new()
-    // allow `GET` and `POST` when accessing the resource
-    .allow_methods([Method::GET, Method::POST, Method::PUT, Method::DELETE])
-    // allow requests from any origin
-    .allow_origin("http://theofficialtierlist.com".parse::<HeaderValue>().unwrap())
-    .allow_headers(Any);
+        // allow `GET` and `POST` when accessing the resource
+        .allow_methods([Method::GET, Method::POST, Method::PUT, Method::DELETE])
+        // allow requests from any origin
+        .allow_origin(
+            allowed_origin
+                .parse::<HeaderValue>()
+                .expect("Invalid Origin"),
+        )
+        .allow_headers(Any);
     // .allow_origin(Any);
 
     let app = Router::new()
@@ -48,8 +55,7 @@ pub async fn run() {
             get(graphql_playground).post(graphql_handler),
         )
         .layer(Extension(schema))
-        .layer(cors)
-        ;
+        .layer(cors);
 
     println!("Playground: http://localhost:3000/api/graphql");
 
