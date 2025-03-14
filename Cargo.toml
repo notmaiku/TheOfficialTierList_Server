@@ -2,6 +2,7 @@
 name = "totl_backend"
 version = "0.1.0"
 edition = "2021"
+repository = "https://github.com/notmaiku/TheOfficialTierList_Server.git"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
@@ -20,6 +21,7 @@ graphql-example-core = { path = "core" }
 async-graphql-axum = "5.0.7"
 entity = { path = "entity" }
 migration = { path = "migration"}
+lambda_runtime = { version = "0.2", optional = true }
 
 [workspace]
 members = [".", "core", "entity", "migration" ]
